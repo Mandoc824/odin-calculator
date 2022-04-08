@@ -28,21 +28,18 @@ function operate(x, y, operator) {
 
 const numberButtons = document.querySelectorAll(".number");
 const input = document.querySelector("input");
+const dotButton = document.querySelector("#dot");
 let operands = [];
 let operators = [];
 let result;
+
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    // if (input.placeholder.includes(".")) {
-    //   input.placeholder += button.textContent;
-    // } else {
-    //   input.placeholder = button.textContent;
-    // }
-    input.placeholder = button.textContent;
-    if (operands.length <= 1) {
-      operands.push(Number(input.placeholder));
+    if (operands.find((operand) => operand === Number(input.placeholder))) {
+      input.placeholder = "";
+      input.placeholder += button.textContent;
     } else {
-      operands = [];
+      input.placeholder += button.textContent;
     }
   });
 });
@@ -51,28 +48,43 @@ const operatorButtons = document.querySelectorAll(".operator");
 
 operatorButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    if (operands.length < 1) {
+      operands.push(Number(input.placeholder));
+    }
+
     if (operands.length === 1 && operators.length < 1) {
       operators.push(button.textContent);
     } else {
-      return;
+      operators = button.textContent;
     }
+
+    if (dotButton.disabled === true) dotButton.disabled = false;
     console.log(operators);
+    console.log(operands);
+    console.log(result);
   });
 });
 
 const resultButton = document.querySelector(".equal");
 
 resultButton.addEventListener("click", () => {
+  if (operands.length === 1) operands.push(Number(input.placeholder));
   if (operands.length === 2 && operators.length === 1) {
     const answer = operate(operands[0], operands[1], ...operators);
     result = answer;
     operands = [];
     operators = [];
     operands.push(result);
-    input.placeholder = answer;
+    input.placeholder = result;
   } else {
+    console.log(operands);
+    console.log(operators);
     return;
   }
+
+  if (dotButton.disabled === true) dotButton.disabled = false;
+  console.log(operands);
+  console.log(operators);
 });
 
 const clearButton = document.querySelector("#clear");
@@ -83,8 +95,6 @@ clearButton.addEventListener("click", () => {
   result = "";
   input.placeholder = "";
 });
-
-const dotButton = document.querySelector("#dot");
 
 dotButton.addEventListener("click", () => {
   const placeholder = input.placeholder;
