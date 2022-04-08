@@ -1,0 +1,63 @@
+body {
+  background-color: #001f3f;
+}
+
+.container {
+  padding: 5px;
+  grid-gap: 5px;
+  border: 3px #696969 solid;
+  margin: 200px auto;
+  background-color: #89cff0;
+  display: grid;
+  width: 240px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: stretch;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "comp comp comp"
+    "ops ops ops"
+    "nums nums equa";
+}
+.operators {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-area: ops;
+}
+
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-area: nums;
+
+  text-align: center;
+}
+.equal {
+  grid-area: equa;
+  background-color: #d65076;
+  font-size: 3rem;
+}
+#computation {
+  grid-area: comp;
+  padding: 20px;
+}
+
+.operators button,
+.numbers button {
+  font-size: 2rem;
+  padding: 10px;
+  text-align: center;
+}
+
+.operators button {
+  background-color: #955251;
+}
+
+.numbers button {
+  background-color: #7fcdcd;
+}
+
+input {
+  text-align: right;
+}
