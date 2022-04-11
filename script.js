@@ -35,12 +35,7 @@ let result;
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (operands.find((operand) => operand === Number(input.placeholder))) {
-      input.placeholder = "";
-      input.placeholder += button.textContent;
-    } else {
-      input.placeholder += button.textContent;
-    }
+    input.value += button.textContent;
   });
 });
 
@@ -49,7 +44,9 @@ const operatorButtons = document.querySelectorAll(".operator");
 operatorButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (operands.length < 1) {
-      operands.push(Number(input.placeholder));
+      operands.push(Number(Number(input.value)));
+      input.placeholder = input.value;
+      input.value = "";
     }
 
     if (operands.length === 1 && operators.length < 1) {
@@ -68,7 +65,11 @@ operatorButtons.forEach((button) => {
 const resultButton = document.querySelector(".equal");
 
 resultButton.addEventListener("click", () => {
-  if (operands.length === 1) operands.push(Number(input.placeholder));
+  if (operands.length === 1) {
+    operands.push(Number(input.value));
+    input.placeholder = input.value;
+    input.value = "";
+  }
   if (operands.length === 2 && operators.length === 1) {
     const answer = operate(operands[0], operands[1], ...operators);
     result = answer;
@@ -97,12 +98,12 @@ clearButton.addEventListener("click", () => {
 });
 
 dotButton.addEventListener("click", () => {
-  const placeholder = input.placeholder;
-  if (placeholder === "") {
+  const value = input.value;
+  if (value === "") {
     return;
-  } else if (placeholder.includes(dotButton.textContent)) {
+  } else if (value.includes(dotButton.textContent)) {
     return (dotButton.disabled = true);
   }
-  input.placeholder += dotButton.textContent;
+  input.value += dotButton.textContent;
   dotButton.disabled = true;
 });
